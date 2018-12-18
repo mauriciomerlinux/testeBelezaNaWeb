@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="sdsd sddddds dsdsd dsdsdsd dddds ssss sddsd asasas" />
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/product_price_raw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R$ 120,00" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/product_price_discount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="R$ 90,00" />
+
+                    <TextView
+                        android:id="@+id/product_price_parcel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3 x R$ 30,00" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/product_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="Lavin" />
+
+                    <TextView
+                        android:id="@+id/product_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="Cod: 23233" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/product_buy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="COMPRE" />
+
+            <Button
+                android:id="@+id/product_call_me"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="AVISE-ME" />
+
+            <TextView
+                android:id="@+id/product_full_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="sdsdsd s sdsd sd sdsd sd sds dsdl lsdk lskd lsmd lsmd lsdm ksmd ksm ksdlkdjklsj slkjd klj skldj skdj ksjd ksjd ksdjslkdjl" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
