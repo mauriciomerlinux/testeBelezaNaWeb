@@ -60,7 +60,7 @@ public class ProductsFragment extends Fragment implements ProductsView {
 
         initView(view);
 
-        presenter = new ProductsPresenter(this, new SchedulerProvider(), new BelezaApiService());
+        presenter = new ProductsPresenter(this, new SchedulerProvider(), new BelezaApiService().getApi());
         currentPage = START_PAGE;
         presenter.loadProducts(currentPage, SIZE);
     }

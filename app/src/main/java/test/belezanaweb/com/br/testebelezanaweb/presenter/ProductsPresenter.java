@@ -14,14 +14,14 @@ import test.belezanaweb.com.br.testebelezanaweb.view.contract.ProductsView;
 
 public class ProductsPresenter {
 
-    private final BelezaApiService service;
+    private final BelezaApiService.Api service;
     private final ProductsView view;
     private CompositeSubscription subscriptions;
     private BaseSchedulerProvider scheduler;
 
-    public ProductsPresenter(ProductsView view, BaseSchedulerProvider scheduler, BelezaApiService service) {
+    public ProductsPresenter(ProductsView view, BaseSchedulerProvider scheduler, BelezaApiService.Api api) {
         this.view = view;
-        this.service = service;
+        this.service = api;
         this.scheduler = scheduler;
         this.subscriptions = new CompositeSubscription();
     }
@@ -29,7 +29,7 @@ public class ProductsPresenter {
     public void loadProducts(Integer page, Integer size) {
         view.showLoading();
 
-        this.subscriptions.add(this.service.getApi().getProducts(page, size)
+        this.subscriptions.add(this.service.getProducts(page, size)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(scheduler.ui())
                 .subscribe(new Observer<List<Product>>() {
@@ -45,12 +45,12 @@ public class ProductsPresenter {
 
                                @Override
                                public void onNext(List<Product> products) {
-                                   view.hideLoading();
                                    if (page > 1) {
                                        view.updateProducts(products);
                                    } else {
                                        view.showProducts(products);
                                    }
+                                   view.hideLoading();
                                }
                            }
 

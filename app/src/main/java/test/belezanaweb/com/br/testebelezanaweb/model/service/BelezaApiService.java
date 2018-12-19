@@ -16,7 +16,7 @@ import test.belezanaweb.com.br.testebelezanaweb.model.Product;
 public class BelezaApiService {
 
     private static final String URL = "https://pacific-wave-51314.herokuapp.com/";
-    private DribbbleApi dribbbleApi;
+    private Api api;
 
     public BelezaApiService() {
 
@@ -32,14 +32,14 @@ public class BelezaApiService {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(client.build());
 
-        dribbbleApi = retrofit.build().create(DribbbleApi.class);
+        api = retrofit.build().create(Api.class);
     }
 
-    public DribbbleApi getApi() {
-        return dribbbleApi;
+    public Api getApi() {
+        return api;
     }
 
-    public interface DribbbleApi {
+    public interface Api {
         @GET("products")
         Observable<List<Product>> getProducts(@Query("page") Integer pageNum, @Query("size") Integer pageSize);
 
