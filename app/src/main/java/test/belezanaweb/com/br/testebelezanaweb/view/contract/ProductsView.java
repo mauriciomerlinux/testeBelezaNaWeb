@@ -12,5 +12,7 @@ public interface ProductsView {
 
     void showProducts(List<Product> products);
 
+    void updateProducts(List<Product> products);
+
     void showError();
 }

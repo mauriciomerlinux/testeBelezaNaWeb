@@ -2,15 +2,14 @@ package test.belezanaweb.com.br.testebelezanaweb.view.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.meuapt.testemeuapt.service.SchedulerProvider;
@@ -27,9 +26,16 @@ import test.belezanaweb.com.br.testebelezanaweb.view.ui.activity.MainActivity;
 
 public class ProductsFragment extends Fragment implements ProductsView {
 
+    private static final Integer SIZE = 3;
+    private static final Integer START_PAGE = 1;
+    private Integer currentPage;
+
     private RecyclerView recyclerView;
+    private ProductRecyclerViewAdapter adapter;
     private ProductsPresenter presenter;
     private ProgressDialog dialog;
+
+    private List<Product> products;
 
     public static ProductsFragment newInstance() {
         return new ProductsFragment();
@@ -55,14 +61,17 @@ public class ProductsFragment extends Fragment implements ProductsView {
         initView(view);
 
         presenter = new ProductsPresenter(this, new SchedulerProvider(), new BelezaApiService());
-        presenter.loadProducts(1, 3);
+        currentPage = START_PAGE;
+        presenter.loadProducts(currentPage, SIZE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        presenter.loadProducts(1, 3);
+        if (products == null || products.size() == 0){
+            presenter.loadProducts(currentPage, SIZE);
+        }
     }
 
     @Override
@@ -85,27 +94,25 @@ public class ProductsFragment extends Fragment implements ProductsView {
 
     @Override
     public void showProducts(final List<Product> products) {
-        final ProductRecyclerViewAdapter adapter = new ProductRecyclerViewAdapter(products);
+        this.products = products;
+
+        adapter = new ProductRecyclerViewAdapter(products);
         adapter.setOnItemClickListener((view, position) -> {
             final Product product = products.get(position);
-            getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment, ProductDetailFragment.newInstance(product)).addToBackStack(MainActivity.TAG_PRODUCT_DETAILS).commit();
+            getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment, ProductDetailFragment.newInstance(product)).addToBackStack(MainActivity.TAG_PRODUCTS).commit();
         });
-        recyclerView.setAdapter(adapter);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Log.d("CALLSCROOL", "CALLLLLL onScrollStateChanged");
-            }
+        recyclerView.setAdapter(adapter);
+    }
 
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                Log.d("CALLSCROOL", "CALLLLLL onScrolled");
-            }
-        });
+    @Override
+    public void updateProducts(List<Product> products) {
+        if (products.size() > 0){
+            currentPage = currentPage + 1;
+            adapter.updateData(products);
+        }
     }
 
     @Override
@@ -115,5 +122,9 @@ public class ProductsFragment extends Fragment implements ProductsView {
 
     void initView(View view) {
         recyclerView = view.findViewById(R.id.shots);
+        Button bLoadMore = view.findViewById(R.id.load_more);
+        bLoadMore.setOnClickListener(view1 -> {
+            presenter.loadProducts(currentPage + 1, SIZE);
+        });
     }
 }

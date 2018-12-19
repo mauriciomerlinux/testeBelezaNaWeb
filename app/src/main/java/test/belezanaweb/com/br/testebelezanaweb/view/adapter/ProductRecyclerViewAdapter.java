@@ -49,11 +49,17 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         holder.tvPrice.setText(format.format(model.getPriceSpecification().getPrice()));
         holder.tvCode.setText(holder.tvCode.getContext().getString(R.string.product_code, model.getSku()));
 
-        if (model.getPriceSpecification().getOriginalPrice() > model.getPriceSpecification().getPrice()){
+        if (model.getPriceSpecification().getOriginalPrice() > model.getPriceSpecification().getPrice()) {
             holder.tvPriceOriginal.setVisibility(View.VISIBLE);
             holder.tvPrice.setText(format.format(model.getPriceSpecification().getOriginalPrice()));
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
+    }
+
+    public void updateData(List<Product> products) {
+        //this.products.clear();
+        this.products.addAll(products);
+        notifyDataSetChanged();
     }
 
     @Override

@@ -2,6 +2,7 @@ package test.belezanaweb.com.br.testebelezanaweb.presenter;
 
 import com.meuapt.testemeuapt.service.BaseSchedulerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observer;
@@ -33,19 +34,23 @@ public class ProductsPresenter {
                 .observeOn(scheduler.ui())
                 .subscribe(new Observer<List<Product>>() {
                                @Override
-                               public void onCompleted() {
-                                   view.hideLoading();
-                               }
+                               public void onCompleted() { }
 
                                @Override
                                public void onError(Throwable e) {
                                    e.printStackTrace();
                                    view.showError();
+                                   view.hideLoading();
                                }
 
                                @Override
                                public void onNext(List<Product> products) {
-                                   view.showProducts(products);
+                                   view.hideLoading();
+                                   if (page > 1) {
+                                       view.updateProducts(products);
+                                   } else {
+                                       view.showProducts(products);
+                                   }
                                }
                            }
 

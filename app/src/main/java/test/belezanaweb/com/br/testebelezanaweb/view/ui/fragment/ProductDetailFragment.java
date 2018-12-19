@@ -135,7 +135,7 @@ public class ProductDetailFragment extends Fragment {
             tvName.setText(product.getBrand().getLine().getName());
         }
 
-        if (product.getInventory().getQuantity() == 0) {
+        if (product.getInventory().getQuantity() > 0) {
             btBuy.setVisibility(View.VISIBLE);
             btCallMe.setVisibility(View.GONE);
         }
