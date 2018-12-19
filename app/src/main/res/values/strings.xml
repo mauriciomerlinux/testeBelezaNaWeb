@@ -5,7 +5,23 @@
     <string name="products">Produtos</string>
     <string name="product_detail">Detalhe do produto</string>
     <string name="product_code">Cod: %d</string>
-    <string name="product_installments">%1$ix de %2$d</string>
-    <string name="product_show_detail">VER DETALHES</string>
+    <string name="product_installments">%1$dx de %2$s</string>
+    <string name="show_detail">VER DETALHES</string>
+
+    <string name="buy">COMPRE</string>
+    <string name="call_me">AVISE-ME</string>
+    <string name="product_description">Descrição do produto</string>
+
+    <string name="dialog_cart">Carrinho</string>
+    <string name="dialog_success_add">Produto adicionado com sucesso!!</string>
+    <string name="dialog_close">Fechar</string>
+    <string name="dialog_call_me">Avise-ME</string>
+    <string name="dialog_success_send_contact">Contato enviado com sucesso!!</string>
+    <string name="dialog_send">Enviar</string>
+
+    <string name="product_detail_error">Erro ao abrir o detalhe, tente novamente!!</string>
+
+    <string name="products_error">Erro ao abrir a lista de produtos, tente novamente!!</string>
+    <string name="products_loading">Carregando!!</string>
 
 </resources>

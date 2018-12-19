@@ -65,7 +65,7 @@ public class ProductDetailFragment extends Fragment {
 
         initView(getView());
         if (getArguments().getSerializable(KEY) == null) {
-            Toast.makeText(getActivity().getApplicationContext(), "erro", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.product_detail_error, Toast.LENGTH_LONG).show();
         } else {
             final Product product = (Product) getArguments().getSerializable(KEY);
             setData(product);
@@ -74,27 +74,27 @@ public class ProductDetailFragment extends Fragment {
 
     private void successAddCart() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Carrinho");
-        builder.setMessage("Produto adicionado com sucesso!!");
-        builder.setPositiveButton("Fechar", (dialogInterface, i) -> getActivity().onBackPressed());
+        builder.setTitle(R.string.dialog_cart);
+        builder.setMessage(R.string.dialog_success_add);
+        builder.setPositiveButton(R.string.dialog_close, (dialogInterface, i) -> getActivity().onBackPressed());
 
         builder.show().setCanceledOnTouchOutside(false);
     }
 
     private void successSendContact() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Avise-ME");
-        builder.setMessage("Contato enviado com sucesso!!");
-        builder.setPositiveButton("Fechar", (dialogInterface, i) -> getActivity().onBackPressed());
+        builder.setTitle(R.string.dialog_call_me);
+        builder.setMessage(R.string.dialog_success_send_contact);
+        builder.setPositiveButton(R.string.dialog_close, (dialogInterface, i) -> getActivity().onBackPressed());
 
         builder.show().setCanceledOnTouchOutside(false);
     }
 
     private void openCallMe() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Avise-ME");
+        builder.setTitle(R.string.dialog_call_me);
         builder.setView(R.layout.dialog_call_me);
-        builder.setPositiveButton("Enviar", (dialogInterface, i) -> successSendContact());
+        builder.setPositiveButton(R.string.call_me, (dialogInterface, i) -> successSendContact());
 
         builder.show().setCanceledOnTouchOutside(false);
     }
@@ -102,7 +102,7 @@ public class ProductDetailFragment extends Fragment {
     private void initView(View view) {
         ivImage = view.findViewById(R.id.product_image);
         tvDescription = view.findViewById(R.id.product_description);
-        tvPriceOriginal = view.findViewById(R.id.product_price_raw);
+        tvPriceOriginal = view.findViewById(R.id.product_price_original);
         tvPriceDiscount = view.findViewById(R.id.product_price_discount);
         tvPriceInstallments = view.findViewById(R.id.product_price_parcel);
         tvName = view.findViewById(R.id.product_name);
@@ -119,7 +119,7 @@ public class ProductDetailFragment extends Fragment {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
         Glide.with(getActivity().getApplicationContext())
-                .load(product.getImageObject().getMedium())
+                .load(product.getImageObject().getLarge())
                 .into(ivImage);
 
         tvDescription.setText(product.getName());
@@ -127,13 +127,15 @@ public class ProductDetailFragment extends Fragment {
         tvPriceOriginal.setPaintFlags(tvPriceOriginal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         tvPriceDiscount.setText(format.format(product.getPriceSpecification().getPrice()));
         Integer num = product.getPriceSpecification().getInstallments().getNumberOfPayments();
-        Double monthly = product.getPriceSpecification().getInstallments().getMonthlyPayment();
+        String monthly = format.format(product.getPriceSpecification().getInstallments().getMonthlyPayment());
         tvPriceInstallments.setText(getString(R.string.product_installments, num, monthly));
         tvCode.setText(getString(R.string.product_code, product.getSku()));
-        tvFullDescription.setText(product.getBrand().getLine().getDescription());
-        tvName.setText(product.getBrand().getLine().getName());
+        if (product.getBrand() != null && product.getBrand().getLine() != null) {
+            tvFullDescription.setText(product.getBrand().getLine().getDescription());
+            tvName.setText(product.getBrand().getLine().getName());
+        }
 
-        if (product.getInventory().getQuantity() > 0) {
+        if (product.getInventory().getQuantity() == 0) {
             btBuy.setVisibility(View.VISIBLE);
             btCallMe.setVisibility(View.GONE);
         }

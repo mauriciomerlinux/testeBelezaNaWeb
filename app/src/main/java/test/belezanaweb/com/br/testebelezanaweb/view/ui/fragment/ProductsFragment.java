@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class ProductsFragment extends Fragment implements ProductsView {
     @Override
     public void showLoading() {
         if (dialog == null || !dialog.isShowing()) {
-            dialog = ProgressDialog.show(getActivity(), "Carregando", "Carregando");
+            dialog = ProgressDialog.show(getActivity(), getString(R.string.products), getString(R.string.products_loading));
         }
     }
 
@@ -96,18 +97,20 @@ public class ProductsFragment extends Fragment implements ProductsView {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                Log.d("CALLSCROOL", "CALLLLLL onScrollStateChanged");
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                Log.d("CALLSCROOL", "CALLLLLL onScrolled");
             }
         });
     }
 
     @Override
     public void showError() {
-        Toast.makeText(getActivity().getApplicationContext(), "Erro, tente novamente!!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), R.string.products_error, Toast.LENGTH_LONG).show();
     }
 
     void initView(View view) {

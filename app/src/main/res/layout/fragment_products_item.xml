@@ -38,6 +38,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="8dp"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
                     android:text="cod: 23332" />
 
             </RelativeLayout>
@@ -54,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_alignParentTop="true"
+                    android:textStyle="bold"
                     android:text="sdddsd sdsdsd flkdlkf ldkflfkldlm sdsmdskdm" />
 
                 <TextView
@@ -62,6 +65,8 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/product_price"
                     android:visibility="gone"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
                     android:text="R$ 90,00" />
 
                 <TextView
@@ -70,6 +75,9 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/product_detail"
                     android:layout_marginBottom="16dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/orange"
+                    android:textStyle="bold"
                     android:text="R$ 55,00" />
 
                 <Button
@@ -78,7 +86,9 @@
                     android:layout_height="40dp"
                     android:layout_marginBottom="8dp"
                     android:layout_alignParentBottom="true"
-                    android:text="VER DETALHES"/>
+                    android:background="@drawable/button_solid"
+                    android:textColor="@color/white"
+                    android:text="@string/show_detail"/>
             </RelativeLayout>
 
         </LinearLayout>
