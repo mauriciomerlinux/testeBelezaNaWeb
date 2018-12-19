@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="4dp">
+
+    <TextView
+        android:id="@+id/contact_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome"/>
+
+    <EditText
+        android:id="@+id/contact_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/contact_name_label"/>
+
+    <TextView
+        android:id="@+id/contact_email_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="E-mail"
+        app:layout_constraintTop_toBottomOf="@+id/contact_name_edit"/>
+
+    <EditText
+        android:id="@+id/contact_email_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/contact_email_label"/>
+
+</android.support.constraint.ConstraintLayout>

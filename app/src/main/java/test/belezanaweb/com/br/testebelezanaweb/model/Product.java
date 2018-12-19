@@ -11,6 +11,8 @@ public class Product implements Serializable {
     private Presentation presentation;
     private PriceSpecification priceSpecification;
     private List<ImageObject> imageObjects;
+    private Brand brand;
+    private Inventory inventory;
 
     public class Detail implements Serializable {
         private String shortDescription;
@@ -24,7 +26,7 @@ public class Product implements Serializable {
         }
     }
 
-    public class Presentation implements Serializable{
+    public class Presentation implements Serializable {
         private Integer value;
         private String unit;
 
@@ -181,6 +183,51 @@ public class Product implements Serializable {
 
     }
 
+    public class Brand implements Serializable {
+        private Line line;
+
+        public Line getLine() {
+            return line;
+        }
+
+        public void setLine(Line line) {
+            this.line = line;
+        }
+
+        public class Line implements Serializable {
+            private String description;
+            private String name;
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+    }
+
+    public class Inventory implements Serializable{
+        private Integer quantity;
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
+            this.quantity = quantity;
+        }
+    }
+
     public Long getSku() {
         return sku;
     }
@@ -227,6 +274,22 @@ public class Product implements Serializable {
 
     public void setImageObjects(List<ImageObject> imageObjects) {
         this.imageObjects = imageObjects;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public ImageObject getImageObject() {

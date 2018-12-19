@@ -85,13 +85,14 @@
                 android:id="@+id/product_buy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="COMPRE" />
 
             <Button
                 android:id="@+id/product_call_me"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="AVISE-ME" />
 
             <TextView

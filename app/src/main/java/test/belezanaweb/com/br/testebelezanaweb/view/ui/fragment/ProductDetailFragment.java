@@ -1,9 +1,10 @@
 package test.belezanaweb.com.br.testebelezanaweb.view.ui.fragment;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class ProductDetailFragment extends Fragment {
 
     private ImageView ivImage;
     private TextView tvDescription;
-    private TextView tvPriceRaw;
+    private TextView tvPriceOriginal;
     private TextView tvPriceDiscount;
     private TextView tvPriceInstallments;
     private TextView tvName;
@@ -57,7 +58,7 @@ public class ProductDetailFragment extends Fragment {
         MainActivity activity = ((MainActivity) getActivity());
 
         if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setTitle("Detalhe do produto");
+            activity.getSupportActionBar().setTitle(R.string.product_detail);
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -71,10 +72,37 @@ public class ProductDetailFragment extends Fragment {
         }
     }
 
-    void initView(View view) {
+    private void successAddCart() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Carrinho");
+        builder.setMessage("Produto adicionado com sucesso!!");
+        builder.setPositiveButton("Fechar", (dialogInterface, i) -> getActivity().onBackPressed());
+
+        builder.show().setCanceledOnTouchOutside(false);
+    }
+
+    private void successSendContact() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Avise-ME");
+        builder.setMessage("Contato enviado com sucesso!!");
+        builder.setPositiveButton("Fechar", (dialogInterface, i) -> getActivity().onBackPressed());
+
+        builder.show().setCanceledOnTouchOutside(false);
+    }
+
+    private void openCallMe() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Avise-ME");
+        builder.setView(R.layout.dialog_call_me);
+        builder.setPositiveButton("Enviar", (dialogInterface, i) -> successSendContact());
+
+        builder.show().setCanceledOnTouchOutside(false);
+    }
+
+    private void initView(View view) {
         ivImage = view.findViewById(R.id.product_image);
         tvDescription = view.findViewById(R.id.product_description);
-        tvPriceRaw = view.findViewById(R.id.product_price_raw);
+        tvPriceOriginal = view.findViewById(R.id.product_price_raw);
         tvPriceDiscount = view.findViewById(R.id.product_price_discount);
         tvPriceInstallments = view.findViewById(R.id.product_price_parcel);
         tvName = view.findViewById(R.id.product_name);
@@ -82,9 +110,12 @@ public class ProductDetailFragment extends Fragment {
         tvFullDescription = view.findViewById(R.id.product_full_description);
         btBuy = view.findViewById(R.id.product_buy);
         btCallMe = view.findViewById(R.id.product_call_me);
+
+        btBuy.setOnClickListener(view1 -> successAddCart());
+        btCallMe.setOnClickListener(view12 -> openCallMe());
     }
 
-    void setData(Product product) {
+    private void setData(Product product) {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
         Glide.with(getActivity().getApplicationContext())
@@ -92,17 +123,19 @@ public class ProductDetailFragment extends Fragment {
                 .into(ivImage);
 
         tvDescription.setText(product.getName());
-        tvPriceRaw.setText(format.format(product.getPriceSpecification().getOriginalPrice()));
+        tvPriceOriginal.setText(format.format(product.getPriceSpecification().getOriginalPrice()));
+        tvPriceOriginal.setPaintFlags(tvPriceOriginal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         tvPriceDiscount.setText(format.format(product.getPriceSpecification().getPrice()));
-        String installment = product.getPriceSpecification().getInstallments().getNumberOfPayments() + "x ";
-        installment = installment.concat(format.format(product.getPriceSpecification().getInstallments().getMonthlyPayment()));
-        tvPriceInstallments.setText(installment);
-        //tvName.setText();
-        tvCode.setText("Cod: " + product.getSku());
-        //tvFullDescription = view.findViewById(R.id.product_full_description);
-        //btBuy = view.findViewById(R.id.product_buy);
-        //btCallMe = view.findViewById(R.id.product_call_me);
+        Integer num = product.getPriceSpecification().getInstallments().getNumberOfPayments();
+        Double monthly = product.getPriceSpecification().getInstallments().getMonthlyPayment();
+        tvPriceInstallments.setText(getString(R.string.product_installments, num, monthly));
+        tvCode.setText(getString(R.string.product_code, product.getSku()));
+        tvFullDescription.setText(product.getBrand().getLine().getDescription());
+        tvName.setText(product.getBrand().getLine().getName());
 
-
+        if (product.getInventory().getQuantity() > 0) {
+            btBuy.setVisibility(View.VISIBLE);
+            btCallMe.setVisibility(View.GONE);
+        }
     }
 }

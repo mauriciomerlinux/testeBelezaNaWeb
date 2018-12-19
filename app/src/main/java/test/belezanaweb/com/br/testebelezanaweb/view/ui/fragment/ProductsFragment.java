@@ -2,6 +2,7 @@ package test.belezanaweb.com.br.testebelezanaweb.view.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,10 +30,6 @@ public class ProductsFragment extends Fragment implements ProductsView {
     private ProductsPresenter presenter;
     private ProgressDialog dialog;
 
-    /*
-    b01415 cor do vermelho
-     */
-
     public static ProductsFragment newInstance() {
         return new ProductsFragment();
     }
@@ -49,20 +46,22 @@ public class ProductsFragment extends Fragment implements ProductsView {
         MainActivity activity = ((MainActivity) getActivity());
 
         if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setTitle("Produtos");
+            activity.getSupportActionBar().setTitle(R.string.products);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
         initView(view);
 
         presenter = new ProductsPresenter(this, new SchedulerProvider(), new BelezaApiService());
-        presenter.loadProducts(1, 5);
+        presenter.loadProducts(1, 3);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        presenter.loadProducts(1, 5);
+        presenter.loadProducts(1, 3);
     }
 
     @Override
@@ -93,6 +92,17 @@ public class ProductsFragment extends Fragment implements ProductsView {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override

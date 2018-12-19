@@ -1,5 +1,6 @@
 package test.belezanaweb.com.br.testebelezanaweb.view.adapter;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         if (model.getPriceSpecification().getOriginalPrice() > model.getPriceSpecification().getPrice()){
             holder.tvPriceOriginal.setVisibility(View.VISIBLE);
             holder.tvPrice.setText(format.format(model.getPriceSpecification().getOriginalPrice()));
+            holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
     }
 
